@@ -5,6 +5,8 @@ const COMMENT_MAX_COUNT = 20;
 const COMMENT_MIN_COUNT = 0;
 const AVATAR_MIN_NUMBER = 1;
 const AVATAR_MAX_NUMBER = 6;
+const COMMENT_STEP = 5;
+const HASHTAG_MAX_COUNT = 5;
 
 const DESCRIPTIONS = ['котик', 'закат', 'рассвет'];
 const NAMES = ['Артем','Владислав', 'Светлана', 'Георгий', 'Анжелика'];
@@ -15,4 +17,4 @@ const MESSAGES = ['Всё отлично!',
   'Я поскользнулся на банановой кожуре и уронил фотоаппарат на кота и у меня получилась фотография лучше.',
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'];
 
-export {PHOTOS_MAX_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, AVATAR_MIN_NUMBER,DESCRIPTIONS,COMMENT_MAX_COUNT,COMMENT_MIN_COUNT, AVATAR_MAX_NUMBER, NAMES, MESSAGES};
+export {PHOTOS_MAX_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, AVATAR_MIN_NUMBER,DESCRIPTIONS,COMMENT_MAX_COUNT,COMMENT_MIN_COUNT, AVATAR_MAX_NUMBER, NAMES, MESSAGES, COMMENT_STEP, HASHTAG_MAX_COUNT};
