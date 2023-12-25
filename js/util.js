@@ -1,3 +1,5 @@
+import {ALERT_SHOW_TIME, SubmitButtonText} from './const.js';
+
 const idGenerator = function*(maxCount) {
   let currentId = 1;
   while (currentId <= maxCount) {
@@ -17,6 +19,7 @@ const getRandomElementFromArray = (elementsArray) => {
 };
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
+
 const getEffectSelector = (currentInputId) => {
   const selectors = {
     'effect-none': 'effects__preview--none',
@@ -30,4 +33,44 @@ const getEffectSelector = (currentInputId) => {
   return selectors[currentInputId];
 };
 
-export {idGenerator, getRandomInt, getRandomElementFromArray, isEscapeKey, getEffectSelector};
+const showAlert = (message) => {
+  const alertContainer = document.createElement('div');
+  alertContainer.style.zIndex = '100';
+  alertContainer.style.position = 'absolute';
+  alertContainer.style.left = '0';
+  alertContainer.style.top = '0';
+  alertContainer.style.right = '0';
+  alertContainer.style.padding = '10px 3px';
+  alertContainer.style.fontSize = '30px';
+  alertContainer.style.textAlign = 'center';
+  alertContainer.style.backgroundColor = 'red';
+
+  alertContainer.textContent = message;
+
+  document.body.append(alertContainer);
+
+  setTimeout(() => {
+    alertContainer.remove();
+  }, ALERT_SHOW_TIME);
+};
+
+const disableSubmitButton = (button) => {
+  button.disabled = true;
+  button.textContent = SubmitButtonText.SENDING;
+};
+
+const unDisableSubmitButton = (button) => {
+  button.disabled = false;
+  button.textContent = SubmitButtonText.IDLE;
+};
+
+const successTemplate = document.querySelector('#success')
+  .content
+  .querySelector('.success');
+
+const showAlertSuccess = (container) => {
+  const success = successTemplate.cloneNode(true);
+  container.appendChild(success);
+};
+
+export {idGenerator, getRandomInt, getRandomElementFromArray, isEscapeKey, getEffectSelector, showAlert, showAlertSuccess, disableSubmitButton, unDisableSubmitButton};

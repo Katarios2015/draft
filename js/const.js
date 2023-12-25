@@ -10,6 +10,7 @@ const HASHTAG_MAX_COUNT = 5;
 const SCALE_STEP = 25;
 const SCALE_MAX = 100;
 const SCALE_MIN = 25;
+const ALERT_SHOW_TIME = 5000;
 
 const DESCRIPTIONS = ['котик', 'закат', 'рассвет'];
 const NAMES = ['Артем','Владислав', 'Светлана', 'Георгий', 'Анжелика'];
@@ -48,4 +49,10 @@ const sliderOptionsObjectMarvinDefault = {
   step: 1,
 };
 
-export {PHOTOS_MAX_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, AVATAR_MIN_NUMBER,DESCRIPTIONS,COMMENT_MAX_COUNT,COMMENT_MIN_COUNT, AVATAR_MAX_NUMBER, NAMES, MESSAGES, COMMENT_STEP, HASHTAG_MAX_COUNT, SCALE_STEP, SCALE_MAX, SCALE_MIN, Effects, sliderOptionsObjectChromeSepia, sliderOptionsObjectMarvinDefault};
+
+const SubmitButtonText = {
+  IDLE: 'Опубликовать',
+  SENDING: 'Публикую...'
+};
+
+export {PHOTOS_MAX_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, AVATAR_MIN_NUMBER,DESCRIPTIONS,COMMENT_MAX_COUNT,COMMENT_MIN_COUNT, AVATAR_MAX_NUMBER, NAMES, MESSAGES, COMMENT_STEP, HASHTAG_MAX_COUNT, SCALE_STEP, SCALE_MAX, SCALE_MIN, Effects, sliderOptionsObjectChromeSepia, sliderOptionsObjectMarvinDefault, ALERT_SHOW_TIME, SubmitButtonText};

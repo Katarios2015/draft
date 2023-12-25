@@ -1,8 +1,9 @@
 import {pageBody} from './full-picture.js';
-import {isEscapeKey} from './util.js';
+import {isEscapeKey, showAlert, showAlertSuccess, disableSubmitButton, unDisableSubmitButton} from './util.js';
 import {HASHTAG_MAX_COUNT} from './const.js';
 import {removeSizeBtnLicteners} from './resize-photo.js';
 import {onEffectRadioBtnClick, effectsRadioBtnList, resetFilter} from './slider-editor.js';
+import {sendData} from './fetch.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 
@@ -13,8 +14,15 @@ const photoEditorResetBtn = photoEditorForm.querySelector('#upload-cancel');
 const hashtagInput = uploadForm.querySelector('.text__hashtags');
 const commentInput = uploadForm.querySelector('.text__description');
 
+const submitBtn = uploadForm.querySelector('#upload-submit');
+let successModal = '';
+let successBtn = '';
+
 const onPhotoEditorResetBtnClick = () => {
   closePhotoEditor();
+};
+const onSuccessBtnClick = () => {
+  closeSuccessModal();
 };
 
 const onDocumentKeydown = (evt) => {
@@ -22,6 +30,8 @@ const onDocumentKeydown = (evt) => {
     evt.preventDefault();
     if(document.activeElement === hashtagInput || document.activeElement === commentInput){
       evt.stopPropagation();
+    } if(successModal){
+      closeSuccessModal();
     } else {
       uploadForm.reset();
       closePhotoEditor();
@@ -39,6 +49,15 @@ function closePhotoEditor () {
   removeSizeBtnLicteners();
   resetFilter();
   effectsRadioBtnList.removeEventListener('click', onEffectRadioBtnClick);
+}
+
+function closeSuccessModal() {
+  if(successModal){
+    successModal.remove();
+    document.removeEventListener('keydown', onDocumentKeydown);
+    successBtn.removeEventListener('click', onSuccessBtnClick);
+    pageBody.removeEventListener('click', onSuccessBtnClick);
+  }
 }
 
 uploadFileControl.addEventListener('change', () => {
@@ -64,19 +83,24 @@ const pristine = new Pristine(uploadForm, {
 // если не хотите, чтобы Pristine валидировала форму по мере ввода, то передайте при подключении третьим аргументом false
 
 const isHashtagRegValid = (value) => {
-  const hashtags = value.split(' ');
-  const validHashtagReg = /^#[a-z-я-ё0-9]{1,19}$/i;
-  let i = 0;
-  const regTest = validHashtagReg.test(hashtags[i]);
+  if(value) {
+    const hashtags = value.split(' ');
+    const validHashtagReg = /^#[a-z-я-ё0-9]{1,19}$/i;
+    let i = 0;
+    const regTest = validHashtagReg.test(hashtags[i]);
 
-  while(regTest) {
-    i++;
-    if(regTest === false){
-      break;
+    while(regTest) {
+      i++;
+      if(regTest === false){
+        break;
+      }
+      return regTest;
     }
     return regTest;
+  } else if(value === ''){
+    return true;
   }
-  return regTest;
+
 };
 
 const isHashtagCountValid = (value) => {
@@ -109,11 +133,28 @@ pristine.addValidator(hashtagInput, isHashtagCountValid, 'более 5ти хе�
 pristine.addValidator(hashtagInput, isDuplicateHashtags, getDuplicateString);
 
 
-const initSubmitUploadformHandler = () => {
+const initSubmitUploadformHandler = (onSuccess) => {
   uploadForm.addEventListener('submit', (evt) => {
     evt.preventDefault();
-    pristine.validate();
+    const isValid = pristine.validate();
+    if (isValid) {
+      disableSubmitButton(submitBtn);
+      sendData(new FormData(evt.target))
+        .then(onSuccess)
+        .then(()=> {
+          showAlertSuccess(pageBody);
+          successModal = document.querySelector('.success');
+          successBtn = successModal.querySelector('.success__button');
+          pageBody.addEventListener('click', onSuccessBtnClick);
+          successBtn.addEventListener('click', onSuccessBtnClick);
+          document.addEventListener('keydown', onDocumentKeydown);
+        })
+        .catch((err) => {
+          showAlert(err.message);
+        })
+        .finally(unDisableSubmitButton(submitBtn));
+    }
   });
 };
 
-export{initSubmitUploadformHandler};
+export{initSubmitUploadformHandler, closePhotoEditor};
