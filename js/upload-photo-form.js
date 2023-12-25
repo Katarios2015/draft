@@ -1,6 +1,8 @@
 import {pageBody} from './full-picture.js';
 import {isEscapeKey} from './util.js';
 import {HASHTAG_MAX_COUNT} from './const.js';
+import {removeSizeBtnLicteners} from './resize-photo.js';
+import {onEffectRadioBtnClick, effectsRadioBtnList, resetFilter} from './slider-editor.js';
 
 const uploadForm = document.querySelector('.img-upload__form');
 
@@ -28,18 +30,23 @@ const onDocumentKeydown = (evt) => {
 };
 
 function closePhotoEditor () {
+  uploadForm.reset();
   photoEditorForm.classList.add('hidden');
   pageBody.classList.remove('modal-open');
   document.removeEventListener('keydown', onDocumentKeydown);
   photoEditorResetBtn.removeEventListener('click', onPhotoEditorResetBtnClick);
   uploadFileControl.value = '';
+  removeSizeBtnLicteners();
+  resetFilter();
+  effectsRadioBtnList.removeEventListener('click', onEffectRadioBtnClick);
 }
 
-uploadFileControl.addEventListener('change', ()=> {
+uploadFileControl.addEventListener('change', () => {
   if(uploadFileControl.value) {
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
     photoEditorResetBtn.addEventListener('click', onPhotoEditorResetBtnClick);
+    effectsRadioBtnList.addEventListener('click', onEffectRadioBtnClick);
     document.addEventListener('keydown', onDocumentKeydown);
   }
 });
@@ -96,11 +103,17 @@ const getDuplicateString = () => {
   const duplicatesString = duplicates.join(', ');
   return` ${`дубликаты: ${ duplicatesString}`}`;
 };
+
 pristine.addValidator(hashtagInput, isHashtagRegValid, 'поле Хештег заполнено не верно');
 pristine.addValidator(hashtagInput, isHashtagCountValid, 'более 5ти хештегов');
 pristine.addValidator(hashtagInput, isDuplicateHashtags, getDuplicateString);
 
-uploadForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-  pristine.validate();
-});
+
+const initSubmitUploadformHandler = () => {
+  uploadForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    pristine.validate();
+  });
+};
+
+export{initSubmitUploadformHandler};

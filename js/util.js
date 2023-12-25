@@ -17,5 +17,17 @@ const getRandomElementFromArray = (elementsArray) => {
 };
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
+const getEffectSelector = (currentInputId) => {
+  const selectors = {
+    'effect-none': 'effects__preview--none',
+    'effect-chrome': 'effects__preview--chrome',
+    'effect-sepia': 'effects__preview--sepia',
+    'effect-marvin': 'effects__preview--marvin',
+    'effect-phobos': 'effects__preview--phobos',
+    'effect-heat': 'effects__preview--heat',
 
-export {idGenerator, getRandomInt, getRandomElementFromArray,isEscapeKey};
+  };
+  return selectors[currentInputId];
+};
+
+export {idGenerator, getRandomInt, getRandomElementFromArray, isEscapeKey, getEffectSelector};

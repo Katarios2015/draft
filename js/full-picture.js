@@ -2,6 +2,7 @@ import {picturesContainer} from './mini-pictures.js';
 import {isEscapeKey} from './util.js';
 import {COMMENT_STEP} from './const.js';
 
+
 const pageBody = document.querySelector('body');
 const bigPictureModal = document.querySelector('.big-picture');
 const commentTemplate = document.querySelector('#comment')
