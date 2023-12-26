@@ -12,6 +12,12 @@ const createGallery = (photosArray) => {
     pictureTemplate.querySelector('.picture__comments').textContent = comments.length;
     pictureTemplate.dataset.id = id;
     const miniaturePicture = pictureTemplate.cloneNode(true);
+    const pictures = picturesContainer.querySelectorAll('.picture');
+    if(pictures){
+      pictures.forEach((item)=> {
+        item.remove();
+      });
+    }
     picturesFragment.appendChild(miniaturePicture);
   });
 
