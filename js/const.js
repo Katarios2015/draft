@@ -12,6 +12,8 @@ const SCALE_MAX = 100;
 const SCALE_MIN = 25;
 const ALERT_SHOW_TIME = 5000;
 
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
 const DESCRIPTIONS = ['котик', 'закат', 'рассвет'];
 const NAMES = ['Артем','Владислав', 'Светлана', 'Георгий', 'Анжелика'];
 const MESSAGES = ['Всё отлично!',
@@ -55,4 +57,4 @@ const SubmitButtonText = {
   SENDING: 'Публикую...'
 };
 
-export {PHOTOS_MAX_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, AVATAR_MIN_NUMBER,DESCRIPTIONS,COMMENT_MAX_COUNT,COMMENT_MIN_COUNT, AVATAR_MAX_NUMBER, NAMES, MESSAGES, COMMENT_STEP, HASHTAG_MAX_COUNT, SCALE_STEP, SCALE_MAX, SCALE_MIN, Effects, sliderOptionsObjectChromeSepia, sliderOptionsObjectMarvinDefault, ALERT_SHOW_TIME, SubmitButtonText};
+export {PHOTOS_MAX_COUNT, LIKES_MAX_COUNT, LIKES_MIN_COUNT, AVATAR_MIN_NUMBER,DESCRIPTIONS,COMMENT_MAX_COUNT,COMMENT_MIN_COUNT, AVATAR_MAX_NUMBER, NAMES, MESSAGES, COMMENT_STEP, HASHTAG_MAX_COUNT, SCALE_STEP, SCALE_MAX, SCALE_MIN, Effects, sliderOptionsObjectChromeSepia, sliderOptionsObjectMarvinDefault, ALERT_SHOW_TIME, SubmitButtonText, FILE_TYPES};
