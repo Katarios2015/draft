@@ -1,6 +1,6 @@
 import {pageBody} from './full-picture.js';
 import {isEscapeKey, showAlert, showAlertSuccess, disableSubmitButton, unDisableSubmitButton} from './util.js';
-import {HASHTAG_MAX_COUNT} from './const.js';
+import {HASHTAG_MAX_COUNT,FILE_TYPES} from './const.js';
 import {removeSizeBtnLicteners} from './resize-photo.js';
 import {onEffectRadioBtnClick, effectsRadioBtnList, resetFilter} from './slider-editor.js';
 import {sendData} from './fetch.js';
@@ -60,8 +60,16 @@ function closeSuccessModal() {
   }
 }
 
+const preview = document.querySelector('.img-upload__preview');
+
 uploadFileControl.addEventListener('change', () => {
   if(uploadFileControl.value) {
+    const file = uploadFileControl.files[0];
+    const fileName = file.name.toLowerCase();
+    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+    if (matches) {
+      preview.firstElementChild.src = URL.createObjectURL(file);
+    }
     photoEditorForm.classList.remove('hidden');
     pageBody.classList.add('modal-open');
     photoEditorResetBtn.addEventListener('click', onPhotoEditorResetBtnClick);
