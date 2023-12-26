@@ -22,5 +22,4 @@ const createPhotoDescription = () => ({
 
 const createPhotoDescriptions = () => Array.from({length:PHOTOS_MAX_COUNT}, createPhotoDescription);
 
-
 export {createPhotoDescriptions};
